@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "474356139139",
+    "project_id": "learn-flutter-firebase-c23fb",
+    "storage_bucket": "learn-flutter-firebase-c23fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:474356139139:android:972b77e53f6bda314c07b6",
+        "android_client_info": {
+          "package_name": "com.example.learn_flutter_authentication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5-XfBHRUWZB5NP9S5Y3FsTZh4rIUugoE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
