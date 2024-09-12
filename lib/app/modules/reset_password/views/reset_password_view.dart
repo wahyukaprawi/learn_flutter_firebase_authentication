@@ -4,16 +4,16 @@ import 'package:get/get.dart';
 import 'package:learn_flutter_authentication/app/controllers/auth_controller.dart';
 
 import '../../../routes/app_pages.dart';
-import '../controllers/login_controller.dart';
+import '../controllers/reset_password_controller.dart';
 
-class LoginView extends GetView<LoginController> {
-  final authC = Get.find<AuthController>();
-  LoginView({super.key});
+class ResetPasswordView extends GetView<ResetPasswordController> {
+  final authC = Get.put(AuthController());
+  ResetPasswordView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login View'),
+        title: const Text('Reset Password View'),
         centerTitle: true,
       ),
       body: Padding(
@@ -26,30 +26,15 @@ class LoginView extends GetView<LoginController> {
                 labelText: 'Email',
               ),
             ),
-            TextField(
-              controller: controller.password,
-              obscureText: controller.hidden.value,
-              decoration: const InputDecoration(
-                labelText: 'Password',
-              ),
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () => Get.offAllNamed(Routes.RESET_PASSWORD),
-                child: const Text(
-                  'RESET PASSWORD',
-                  style: TextStyle(fontSize: 12),
-                ),
-              ),
+            const SizedBox(
+              height: 40,
             ),
             ElevatedButton(
-              onPressed: () => authC.login(
+              onPressed: () => authC.resetPassword(
                 controller.email.text,
-                controller.password.text,
               ),
               child: const Text(
-                'Login',
+                'Reset',
               ),
             ),
             const SizedBox(
@@ -59,12 +44,12 @@ class LoginView extends GetView<LoginController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  "Don't have an account?",
+                  "Do you have an account?",
                 ),
                 TextButton(
-                  onPressed: () => Get.offAllNamed(Routes.SINGUP),
+                  onPressed: () => Get.offAllNamed(Routes.LOGIN),
                   child: const Text(
-                    "REGISTER NOW",
+                    "LOGIN",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),

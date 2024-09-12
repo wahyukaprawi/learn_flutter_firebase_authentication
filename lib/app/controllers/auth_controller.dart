@@ -84,6 +84,32 @@ class AuthController extends GetxController {
     }
   }
 
+  void resetPassword(String email) async {
+    if (email != '' && GetUtils.isEmail(email)) {
+      try {
+        auth.sendPasswordResetEmail(email: email);
+        Get.defaultDialog(
+            title: 'Check your email',
+            middleText: 'We have sent an email to reset your password.',
+            onConfirm: () {
+              Get.back();
+              Get.offAllNamed(Routes.LOGIN);
+            },
+            textConfirm: 'OK');
+      } catch (e) {
+        Get.defaultDialog(
+          title: 'Error Occurred',
+          middleText: 'Unable to send email to reset password.',
+        );
+      }
+    } else {
+      Get.defaultDialog(
+        title: 'Error Occurred',
+        middleText: 'Invalid email.',
+      );
+    }
+  }
+
   void logout() async {
     await auth.signOut();
     Get.offAllNamed(Routes.LOGIN);
