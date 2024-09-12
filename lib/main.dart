@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
             ),
             title: "Application",
             initialRoute:
-                snapshot.data != null ? AppPages.INITIAL : Routes.LOGIN,
+                snapshot.data != null && snapshot.data!.emailVerified == true ? AppPages.INITIAL : Routes.LOGIN,
             getPages: AppPages.routes,
           );
         }

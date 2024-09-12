@@ -11,34 +11,75 @@ class AuthController extends GetxController {
 
   void signup(String email, String password) async {
     try {
-      await auth.createUserWithEmailAndPassword(
+      UserCredential myUser = await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      Get.offAllNamed(Routes.HOME);
+      await myUser.user?.sendEmailVerification();
+      Get.defaultDialog(
+          title: 'Verification Email',
+          middleText: 'Check your email for verification.',
+          onConfirm: () {
+            Get.back();
+            Get.offAllNamed(Routes.LOGIN);
+          },
+          textConfirm: 'OK');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        Get.defaultDialog(
+          title: 'Error Occurred',
+          middleText: 'The password provided is too weak.',
+        );
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        Get.defaultDialog(
+          title: 'Error Occurred',
+          middleText: 'The account already exists for that email.',
+        );
       }
     } catch (e) {
-      print(e);
+      Get.defaultDialog(
+        title: 'Error Occurred',
+        middleText: 'Unable to register account.',
+      );
     }
   }
 
   void login(String email, String password) async {
     try {
-      await auth.signInWithEmailAndPassword(
+      UserCredential myUser = await auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      Get.offAllNamed(Routes.HOME);
+      if (myUser.user!.emailVerified) {
+        Get.offAllNamed(Routes.HOME);
+      } else {
+        Get.defaultDialog(
+          title: 'Verification Email',
+          middleText: 'Verify your email.',
+        );
+      }
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+      if (e.code == 'invalid-credential') {
+        Get.defaultDialog(
+          title: 'Invalid Credentials',
+          middleText:
+              'The credentials provided are invalid. Please check and try again.',
+        );
+      } else if (e.code == 'user-not-found') {
+        Get.defaultDialog(
+          title: 'Error Occurred',
+          middleText: 'No user found for that email.',
+        );
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+        Get.defaultDialog(
+          title: 'Error Occurred',
+          middleText: 'Wrong password provided for that user.',
+        );
+      } else {
+        Get.defaultDialog(
+          title: 'Error Occurred',
+          middleText: 'An unexpected error occurred: ${e.message}.',
+        );
       }
     }
   }

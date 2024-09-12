@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:learn_flutter_authentication/app/controllers/auth_controller.dart';
-import 'package:learn_flutter_authentication/app/routes/app_pages.dart';
 
+import '../../../routes/app_pages.dart';
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
   final authC = Get.find<AuthController>();
-
   LoginView({super.key});
   @override
   Widget build(BuildContext context) {
@@ -56,7 +55,7 @@ class LoginView extends GetView<LoginController> {
                   "Don't have an account?",
                 ),
                 TextButton(
-                  onPressed: ()=> Get.offAllNamed(Routes.SINGUP),
+                  onPressed: () => Get.offAllNamed(Routes.SINGUP),
                   child: const Text(
                     "REGISTER NOW",
                     style: TextStyle(
