@@ -2,15 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:learn_flutter_authentication/app/controllers/auth_controller.dart';
 import 'package:learn_flutter_authentication/app/routes/app_pages.dart';
 
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-  final authC = Get.find<AuthController>();
-
-  HomeView({super.key});
+  const HomeView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,11 +15,21 @@ class HomeView extends GetView<HomeController> {
         title: const Text('Home View'),
         centerTitle: true,
         actions: [
-          IconButton(
-            onPressed: () => authC.logout(),
-            icon: const Icon(
-              Icons.logout_outlined,
-            ),
+          Row(
+            children: [
+              IconButton(
+                onPressed: () => controller.filterData("28"),
+                icon: const Icon(
+                  Icons.filter_list_outlined,
+                ),
+              ),
+              IconButton(
+                onPressed: () => controller.logout(),
+                icon: const Icon(
+                  Icons.logout_outlined,
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -51,7 +58,8 @@ class HomeView extends GetView<HomeController> {
                     arguments: listAllDocs[index].id,
                   ),
                   trailing: IconButton(
-                    onPressed: () => controller.deleteData(listAllDocs[index].id),
+                    onPressed: () =>
+                        controller.deleteData(listAllDocs[index].id),
                     icon: Icon(
                       color: Colors.red[700],
                       Icons.delete,
