@@ -1,23 +1,36 @@
-// ignore_for_file: unnecessary_overrides
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  Stream<QuerySnapshot<Object?>> streamData() {
+    CollectionReference users = firestore.collection('users');
+    return users.orderBy('time', descending: true).snapshots();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  void deleteData(String docID) {
+    DocumentReference<Map<String, dynamic>> docData =
+        firestore.collection('users').doc(docID);
+    try {
+      Get.defaultDialog(
+        title: 'Warning',
+        middleText: 'Are you sure delete this data?',
+        textCancel: 'CANCEL',
+        onCancel: () {
+          Get.back();
+        },
+        textConfirm: 'OK',
+        onConfirm: () {
+          Get.back();
+          docData.delete();
+        },
+      );
+    } catch (e) {
+      Get.defaultDialog(
+        title: 'Error Occurred',
+        middleText: 'Could not edit data.',
+      );
+    }
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

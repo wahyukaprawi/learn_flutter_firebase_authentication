@@ -1,5 +1,9 @@
 import 'package:get/get.dart';
 
+import '../modules/add_user/bindings/add_user_binding.dart';
+import '../modules/add_user/views/add_user_view.dart';
+import '../modules/edit_user/bindings/edit_user_binding.dart';
+import '../modules/edit_user/views/edit_user_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -38,6 +42,16 @@ class AppPages {
       name: _Paths.RESET_PASSWORD,
       page: () => ResetPasswordView(),
       binding: ResetPasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_USER,
+      page: () => const AddUserView(),
+      binding: AddUserBinding(),
+    ),
+    GetPage(
+      name: _Paths.EDIT_USER,
+      page: () => const EditUserView(),
+      binding: EditUserBinding(),
     ),
   ];
 }
